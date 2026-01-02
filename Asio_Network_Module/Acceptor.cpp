@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Acceptor.h"
 
-Acceptor::Acceptor(asio::io_context& io, short port)
+Acceptor::Acceptor(asio::io_context& io, uint16 port)
 	: _acceptor(io, tcp::endpoint(tcp::v4(), port)), 
 	_strand(io.get_executor()), _isRunning(false)
 {
