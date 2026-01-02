@@ -4,6 +4,9 @@
 #define ASIO_STANDALONE
 #include "asio.hpp"
 
+#include <vector>
+#include <thread>
+
 using asio::ip::tcp;
 
 using BYTE = unsigned char;
