@@ -2,8 +2,54 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ServerService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="ISessionListener.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionManager.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="Acceptor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ServerService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Session</Filter>
+    </ClInclude>
+    <ClInclude Include="ISessionListener.h">
+      <Filter>Session</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionManager.h">
+      <Filter>Session</Filter>
+    </ClInclude>
+    <ClInclude Include="Acceptor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Service">
+      <UniqueIdentifier>{914e82ab-c5af-47f8-95bb-cda36c54bbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Session">
+      <UniqueIdentifier>{d53c18c9-78a7-41d2-b05e-5427bdcbfb65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

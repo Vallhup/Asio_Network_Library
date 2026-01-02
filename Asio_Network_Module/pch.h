@@ -4,6 +4,8 @@
 #define ASIO_STANDALONE
 #include "asio.hpp"
 
+using asio::ip::tcp;
+
 using BYTE = unsigned char;
 using int8 = __int8;
 using int16 = __int16;
