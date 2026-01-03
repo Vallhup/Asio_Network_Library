@@ -11,12 +11,17 @@
     <ClCompile Include="ClientService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="Connection.cpp">
       <Filter>Connection</Filter>
     </ClCompile>
     <ClCompile Include="IConnectionListener.cpp">
       <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="Acceptor.cpp">
+      <Filter>Accept</Filter>
+    </ClCompile>
+    <ClCompile Include="IAcceptListener.cpp">
+      <Filter>Accept</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -30,12 +35,17 @@
     <ClInclude Include="ClientService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Acceptor.h" />
     <ClInclude Include="Connection.h">
       <Filter>Connection</Filter>
     </ClInclude>
     <ClInclude Include="IConnectionListener.h">
       <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="Acceptor.h">
+      <Filter>Accept</Filter>
+    </ClInclude>
+    <ClInclude Include="IAcceptListener.h">
+      <Filter>Accept</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +54,9 @@
     </Filter>
     <Filter Include="Connection">
       <UniqueIdentifier>{ef183ffe-6a4f-4815-b950-f1fe4b7f8e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Accept">
+      <UniqueIdentifier>{b006c050-e84e-4bc0-b22b-51393423beff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

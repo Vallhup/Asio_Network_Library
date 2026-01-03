@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Acceptor.h"
+#include "IAcceptListener.h"
 
-Acceptor::Acceptor(asio::io_context& io, uint16 port)
-	: _acceptor(io, tcp::endpoint(tcp::v4(), port)), 
+Acceptor::Acceptor(asio::io_context& io, uint16 port, IAcceptListener& listener)
+	: _acceptor(io, tcp::endpoint(tcp::v4(), port)), _listener(listener),
 	_strand(io.get_executor()), _isRunning(false)
 {
 	_acceptor.set_option(asio::socket_base::reuse_address(true));
@@ -16,7 +17,7 @@ void Acceptor::Start()
 			if (!_isRunning)
 			{
 				_isRunning = true;
-				Accept();
+				DoAccept();
 			}
 		}
 	);
@@ -36,7 +37,7 @@ void Acceptor::Stop()
 	);
 }
 
-void Acceptor::Accept()
+void Acceptor::DoAccept()
 {
 	if (!_isRunning) return;
 
@@ -44,19 +45,20 @@ void Acceptor::Accept()
 		asio::bind_executor(_strand,
 			[this](std::error_code ec, tcp::socket socket)
 			{
-				if (!ec)
+				if (ec)
 				{
-					// Forward sockets to SessionManager
-					// OnAccepted(std::move(socket));
+					// Error Handling
 				}
 
+				_listener.OnAccept(std::move(socket));
+
 				if(_isRunning)
-					Accept();
+					DoAccept();
 			}
 		)
 	);
-	
 }
+
 
 void Acceptor::Close()
 {
