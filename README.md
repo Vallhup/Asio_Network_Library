@@ -71,10 +71,8 @@ ClientService and ServerService define TCP connection policies for outgoing and 
 **Responsibilities**
  - Defines connection policies for outbound TCP connections (ClientService)
  - Defines acceptance policies for inbound TCP connections (ServerService)
- - Create Connection instances from successfully connected sockets
 
 **Non-Responsibilities**
- - Managing Connection lifetime after creation
  - Interpreting packet data
  - Handling application logic
  - Performing application-level synchronization
@@ -94,6 +92,25 @@ Acceptor abstracts the asynchronous accept loop for server-side connections
  - Connection management or storage
  - Error recovery policies
 
+### IAcceptListener (Server only)
+
+The network library does not provide a session management facility
+
+The server application is responsible for implementing IAcceptListenerto process sockets accepted by the Acceptor and bind them to application-level Connection or session contexts
+
+**Role**
+Defines the server-side hook invoked when a new socket is accepted
+
+**Responsibilities**
+ - Receive ownership of accepted TCP sockets
+ - Create Connection instances from accepted sockets
+ - Bind Connections to application-level session or client contexts
+
+**Non-Responsibilities**
+ - Managing accept loops
+ - Performing network I/O
+ - Defining application session policies
+
 ### Connection
 
 **Role**
@@ -112,6 +129,8 @@ Connection represents a single transport-level connection and abstracts all asyn
  - Managing application logic
 
 ### IConnectionListener
+
+All applications that create and own Connection instances must provide an implementation of the IConnectionListener interface
 
 **Role**
 Defines the callback interface between the network layer and the application layer
