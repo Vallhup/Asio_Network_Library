@@ -18,17 +18,20 @@ This Project aims to develop a reusable asynchronous TCP network library based o
 
 ## 4. Architecture Overview
 
-Application
+Asio_Network_Module
  ├─ ISessionListener
- └─ NetworkService
-     ├─ ClientService / ServerService
-     ├─ Acceptor (server only)
-     ├─ Session
-     │  ├─ PacketCodec
-     |  │  └─ PacketHeader
-     │  ├─ RecvBuffer
-     │  └─ SendBuffer
-     └─ SessionManager
+ ├─ NetworkService
+ |  ├─ ClientService / ServerService
+ |  └─ Acceptor (server only)
+ |
+ ├─ Connection
+ |  ├─ asio::socket
+ |  ├─ asio::strand
+ |  ├─ async send / recv
+ |  ├─ packet framing
+ |  └─ IConnectionListener
+ |
+ └─ Packet (Header + Payload)
 
 ## 5. Threading Model
 
@@ -69,10 +72,10 @@ ClientService and ServerService define TCP connection policies for outgoing and 
 **Responsibilities**
  - Defines connection policies for outbound TCP connections (ClientService)
  - Defines acceptance policies for inbound TCP connections (ServerService)
- - Create Session instances from successfully connected sockets
+ - Create Connection instances from successfully connected sockets
 
 **Non-Responsibilities**
- - Managing session lifetime after creation
+ - Managing Connection lifetime after creation
  - Interpreting packet data
  - Handling application logic
  - Performing application-level synchronization
@@ -88,52 +91,42 @@ Acceptor abstracts the asynchronous accept loop for server-side connections
  - Delegate accepted sockets to ServerService
 
 **Non-Responsibilities**
- - Session creation logic
- - Session management or storage
+ - Connection creation logic
+ - Connection management or storage
  - Error recovery policies
 
-### Session
+### Connection
 
 **Role**
-Session represents a single TCP connection and acts as the core unit of communication
+Connection represents a single transport-level connection and abstracts all asynchronous network I/O behavior
 
 **Responsibilities**
- - Own a TCP socket and associated strand
- - Perform asynchronous read and write operations
- - Manage connection lifetime and shutdown
- - Deliver completed packets to the application via callbacks
+ - Owns a single asio::socket
+ - Owns a dedicated strand and serializes all internal state transitions within that strand
+ - Perfroms asynchronous network I/O
+ - Assembles raw byte streams into packet units
+ - Notifies packet events via IConnectionListener
 
 **Non-Responsibilities**
- - Packet interpretation or application logic
- - Thread synchronization outside its strand
+ - Interpreting packet meaning
+ - Managing player or session state
+ - Managing application logic
 
-### SessionManager
+### IConnectionListener
 
 **Role**
-SessionManager tracks active Session instances within the service
+Defines the callback interface between the network layer and the application layer
 
 **Responsibilities**
- - Add and remove active sessions
- - Provide session lookup by identifier
- - Coordinate bulk operations such as shutdown
+ - Receive connection lifecycle events
+ - Receive completed packets
+ - Bridge network events to application logic
+ - Callbacks are invoked within the associated Connection's strand
 
 **Non-Responsibilities**
  - Performing network I/O
- - Making application-level decisions
-
-### ISessionListener
-
-**Role**
-ISessionListener defines the callback interface used to deliver session events to the application
-
-**Responsibilities**
- - Receive connection, packet, and disconnection events
- - Act as the integration boundary with application logic
-
-**Non-Responsibilities**
- - Performing network operations
- - Managing session lifetime
- - Synchronizing threads
+ - Managing connection lifetime
+ - Thread synchronization
 
 ### RecvBuffer / SendBuffer
 RecvBuffer and SendBuffer are implementation-specific components.
