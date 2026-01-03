@@ -20,7 +20,6 @@ void NetworkService::Stop()
 {
 	OnStop();
 	StopWorkers();
-	// TODO : (SessionManager) Clear all sessions
 }
 
 void NetworkService::StartWorkers()

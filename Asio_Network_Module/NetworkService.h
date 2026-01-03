@@ -10,13 +10,12 @@ public:
 	void Stop();
 
 protected:
-	NetworkService(uint16 threadCnt);
+	explicit NetworkService(uint16 threadCnt);
 
 	virtual void OnStart() = 0;
 	virtual void OnStop() = 0;
 
 	asio::io_context _ioCtx;
-	SessionManager _sessMng;
 
 private:
 	void StartWorkers();

@@ -3,7 +3,7 @@
 
 class ClientService : public NetworkService {
 public:
-	ClientService(uint16 threadCnt);
+	explicit ClientService(uint16 threadCnt);
 	virtual ~ClientService() = default;
 
 protected:

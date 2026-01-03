@@ -5,7 +5,7 @@
 
 class ServerService : public NetworkService {
 public:
-	ServerService(uint16 threadCnt, uint16 port);
+	explicit ServerService(uint16 threadCnt, uint16 port);
 	virtual ~ServerService() = default;
 
 protected:

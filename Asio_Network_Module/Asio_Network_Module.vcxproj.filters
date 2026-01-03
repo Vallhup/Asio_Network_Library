@@ -11,16 +11,13 @@
     <ClCompile Include="ClientService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="Session.cpp">
-      <Filter>Session</Filter>
-    </ClCompile>
-    <ClCompile Include="ISessionListener.cpp">
-      <Filter>Session</Filter>
-    </ClCompile>
-    <ClCompile Include="SessionManager.cpp">
-      <Filter>Session</Filter>
-    </ClCompile>
     <ClCompile Include="Acceptor.cpp" />
+    <ClCompile Include="Connection.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="IConnectionListener.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -33,23 +30,20 @@
     <ClInclude Include="ClientService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Session.h">
-      <Filter>Session</Filter>
-    </ClInclude>
-    <ClInclude Include="ISessionListener.h">
-      <Filter>Session</Filter>
-    </ClInclude>
-    <ClInclude Include="SessionManager.h">
-      <Filter>Session</Filter>
-    </ClInclude>
     <ClInclude Include="Acceptor.h" />
+    <ClInclude Include="Connection.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="IConnectionListener.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Service">
       <UniqueIdentifier>{914e82ab-c5af-47f8-95bb-cda36c54bbc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Session">
-      <UniqueIdentifier>{d53c18c9-78a7-41d2-b05e-5427bdcbfb65}</UniqueIdentifier>
+    <Filter Include="Connection">
+      <UniqueIdentifier>{ef183ffe-6a4f-4815-b950-f1fe4b7f8e93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
