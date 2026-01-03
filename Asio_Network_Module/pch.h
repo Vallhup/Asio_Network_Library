@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <span>
 #include <thread>
 
 using asio::ip::tcp;
