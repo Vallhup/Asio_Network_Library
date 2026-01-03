@@ -3,7 +3,10 @@
 
 class ClientService : public NetworkService {
 public:
-	ClientService();
-	virtual ~ClientService();
-};
+	ClientService(uint16 threadCnt);
+	virtual ~ClientService() = default;
 
+protected:
+	virtual void OnStart() override;
+	virtual void OnStop() override;
+};
