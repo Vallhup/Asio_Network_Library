@@ -19,7 +19,6 @@ This Project aims to develop a reusable asynchronous TCP network library based o
 ## 4. Architecture Overview
 
 Asio_Network_Module
- ├─ ISessionListener
  ├─ NetworkService
  |  ├─ ClientService / ServerService
  |  └─ Acceptor (server only)
