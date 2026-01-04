@@ -1,7 +1,5 @@
 #pragma once
 
-#include "SessionManager.h"
-
 class NetworkService {
 public:
 	virtual ~NetworkService() = default;

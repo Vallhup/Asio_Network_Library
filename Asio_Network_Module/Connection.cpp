@@ -145,7 +145,7 @@ void Connection::ProcessPacket()
 {
 	while (true)
 	{
-		const uint32 receivedSize = _recvAccum.size();
+		const uint32 receivedSize = static_cast<const uint32>(_recvAccum.size());
 		if (receivedSize < sizeof(PacketHeader)) return;
 
 		PacketHeader header;

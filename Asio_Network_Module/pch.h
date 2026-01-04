@@ -5,10 +5,11 @@
 #include "asio.hpp"
 
 #include <iostream>
+#include <optional>
+#include <thread>
 #include <vector>
 #include <deque>
 #include <span>
-#include <thread>
 
 using asio::ip::tcp;
 

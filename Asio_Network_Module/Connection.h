@@ -35,7 +35,6 @@ private:
 	const uint32 _maxPacketSize;
 	IConnectionListener& _listener;
 
-	// TEMP : Use vector as a simple buffer
 	std::array<BYTE, 4096> _recvTemp;
 	std::vector<BYTE> _recvAccum;
 
