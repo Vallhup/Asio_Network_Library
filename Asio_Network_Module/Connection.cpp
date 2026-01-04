@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "Connection.h"
 #include "IConnectionListener.h"
+#include "Protocol.h"
 
-Connection::Connection(tcp::socket s, IConnectionListener& listener)
-	: _socket(std::move(s)), _strand(_socket.get_executor()), 
-	_isClosed(false), _isSending(false), _listener(listener)
+Connection::Connection(tcp::socket s, IConnectionListener& listener
+	, uint32 maxPacketSize) : _socket(std::move(s)), _strand(_socket.get_executor()), 
+	_isClosed(false), _isSending(false), _listener(listener), 
+	_maxPacketSize(maxPacketSize)
 {
 }
 
@@ -141,10 +143,31 @@ void Connection::OnSend(std::error_code ec, size_t batchCount)
 
 void Connection::ProcessPacket()
 {
-	// TODO : 패킷 재조립 및 listener에게 전달
+	while (true)
+	{
+		const uint32 receivedSize = _recvAccum.size();
+		if (receivedSize < sizeof(PacketHeader)) return;
 
-	/*std::vector<BYTE> packet;
-	_listener.OnPacketReceived(*this, packet);*/
+		PacketHeader header;
+		std::memcpy(&header, _recvAccum.data(), sizeof(PacketHeader));
+
+		const uint32 packetSize = header.size;
+		if (packetSize < sizeof(PacketHeader) || packetSize > _maxPacketSize)
+		{
+			Close();
+			return;
+		}
+
+		if (receivedSize < packetSize) return;
+
+		std::vector<BYTE> packet(_recvAccum.begin(),
+			_recvAccum.begin() + packetSize);
+
+		_recvAccum.erase(_recvAccum.begin(),
+			_recvAccum.begin() + packetSize);
+
+		_listener.OnPacketReceived(*this, packet);
+	}
 }
 
 void Connection::Close()

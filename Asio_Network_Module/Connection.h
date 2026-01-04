@@ -6,9 +6,11 @@ class Connection
 	: public std::enable_shared_from_this<Connection> {
 	static constexpr size_t MAX_BUFFERS{ 32 };
 	static constexpr size_t MAX_BYTES{ 64 * 1024 };
+	static constexpr uint32 DEFAULT_MAX_PACKET_SIZE{ 1024 * 1024 };
 
 public:
-	explicit Connection(tcp::socket s, IConnectionListener& listener);
+	explicit Connection(tcp::socket s, IConnectionListener& listener
+		, uint32 maxPacketSize = DEFAULT_MAX_PACKET_SIZE);
 	virtual ~Connection() = default;
 
 	void Start();
@@ -30,6 +32,7 @@ private:
 	tcp::socket _socket;
 	asio::strand<asio::any_io_executor> _strand;
 
+	const uint32 _maxPacketSize;
 	IConnectionListener& _listener;
 
 	// TEMP : Use vector as a simple buffer

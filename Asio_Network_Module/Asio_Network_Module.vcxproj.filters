@@ -23,6 +23,9 @@
     <ClCompile Include="IAcceptListener.cpp">
       <Filter>Accept</Filter>
     </ClCompile>
+    <ClCompile Include="Protocol.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -47,16 +50,22 @@
     <ClInclude Include="IAcceptListener.h">
       <Filter>Accept</Filter>
     </ClInclude>
+    <ClInclude Include="Protocol.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Service">
-      <UniqueIdentifier>{914e82ab-c5af-47f8-95bb-cda36c54bbc9}</UniqueIdentifier>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{c6bb4387-bc40-4ed3-a77e-5b37b909673f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Accept">
+      <UniqueIdentifier>{b006c050-e84e-4bc0-b22b-51393423beff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Connection">
       <UniqueIdentifier>{ef183ffe-6a4f-4815-b950-f1fe4b7f8e93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Accept">
-      <UniqueIdentifier>{b006c050-e84e-4bc0-b22b-51393423beff}</UniqueIdentifier>
+    <Filter Include="Service">
+      <UniqueIdentifier>{914e82ab-c5af-47f8-95bb-cda36c54bbc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
