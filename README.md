@@ -22,6 +22,7 @@ Asio_Network_Module
  ├─ NetworkService
  |  ├─ ClientService / ServerService
  |  └─ Acceptor (server only)
+ |     └─ IAcceptListener
  |
  ├─ Connection
  |  ├─ asio::socket
@@ -150,9 +151,24 @@ Defines the callback interface between the network layer and the application lay
 RecvBuffer and SendBuffer are implementation-specific components.
 Their internal data structures may change for performance reasons without affecting the public behavior of Session.
 
-## 7. Packet Model
+## 7. Protocol Helper
 
+### PacketHeader
+The PacketHeader structure is a helper for packet boundary framing.
 
+The PacketHeader consists of size and type variables, where size is the total size of the packet including the header, and type is an application-defined identifier used to classify packets.
+
+### IPacketCodec
+The IPacketCodec interface provides users with an interface for Packet serialization and deserialization.
+
+Implementations of IPacketCodec are responsible for creating and interpreting PacketHeader values based on the provided parameters.
+
+Users do not need to construct PacketHeader instances directly.
+
+**Caution**
+
+Decode does not take ownership of the packet buffer.
+The returned payload pointer references memory owned by the caller.
 
 ## 8. Session LifeCycle
 
