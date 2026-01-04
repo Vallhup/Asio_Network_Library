@@ -3,6 +3,8 @@
 #include "IConnectionListener.h"
 #include "Protocol.h"
 
+/* --------------[ Connection ]--------------*/
+
 Connection::Connection(tcp::socket s, IConnectionListener& listener
 	, uint32 maxPacketSize) : _socket(std::move(s)), _strand(_socket.get_executor()), 
 	_isClosed(false), _isSending(false), _listener(listener), 
@@ -40,7 +42,12 @@ void Connection::Send(std::span<const BYTE> data)
 {
 	if (data.size() == 0) return;
 
-	auto buffer = std::vector<BYTE>(data.data(), data.data() + data.size());
+	SendBuffer* buffer = _sendPool.Acquire();
+	buffer->size = static_cast<uint32>(data.size());
+	memcpy(buffer->data, data.data(), buffer->size);
+
+	//std::vector<BYTE> buffer(data.begin(), data.begin() + data.size());
+
 	auto self = shared_from_this();
 	asio::dispatch(_strand,
 		[this, self, buf = std::move(buffer)]()
@@ -83,12 +90,22 @@ void Connection::DoSend()
 	for (auto& data : _sendQueue)
 	{
 		if (batchCount >= MAX_BUFFERS) break;
+		if (totalBytes + data->size > MAX_BYTES) break;
+
+		_gatherBufs.emplace_back(asio::buffer(data->data, data->size));
+		totalBytes += data->size;
+		++batchCount;
+	}
+
+	/*for (auto& data : _sendQueue2)
+	{
+		if (batchCount >= MAX_BUFFERS) break;
 		if (totalBytes + data.size() > MAX_BYTES) break;
 
 		_gatherBufs.emplace_back(asio::buffer(data.data(), data.size()));
 		totalBytes += data.size();
 		++batchCount;
-	}
+	}*/
 
 	auto self = shared_from_this();
 	asio::async_write(
@@ -127,7 +144,13 @@ void Connection::OnSend(std::error_code ec, size_t batchCount)
 	}
 
 	for (size_t i = 0; i < batchCount; ++i)
+	{
+		SendBuffer* front = _sendQueue.front();
 		_sendQueue.pop_front();
+		_sendPool.Release(front);
+		//_sendQueue2.pop_front();
+	}
+		
 
 	if (!_sendQueue.empty())
 		DoSend();
@@ -190,4 +213,24 @@ void Connection::Close()
 			// Error Handling
 		}
 	}
+}
+
+/* --------------[ BufferPool ]--------------*/
+
+Connection::SendBuffer* Connection::SendBufferPool::Acquire()
+{
+	if (_free.empty())
+		return new SendBuffer;
+	
+	SendBuffer* buf = _free.back();
+	_free.pop_back();
+	return buf;
+}
+
+void Connection::SendBufferPool::Release(SendBuffer* buf)
+{
+	if (!buf) return;
+
+	buf->size = 0;
+	_free.push_back(buf);
 }

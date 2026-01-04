@@ -8,6 +8,20 @@ class Connection
 	static constexpr size_t MAX_BYTES{ 64 * 1024 };
 	static constexpr uint32 DEFAULT_MAX_PACKET_SIZE{ 1024 * 1024 };
 
+	struct SendBuffer {
+		uint32 size;
+		BYTE data[DEFAULT_MAX_PACKET_SIZE];
+	};
+
+	class SendBufferPool {
+	public:
+		SendBuffer* Acquire();
+		void Release(SendBuffer* buf);
+
+	private:
+		std::vector<SendBuffer*> _free;
+	};
+
 public:
 	explicit Connection(tcp::socket s, IConnectionListener& listener
 		, uint32 maxPacketSize = DEFAULT_MAX_PACKET_SIZE);
@@ -39,7 +53,10 @@ private:
 	std::vector<BYTE> _recvAccum;
 
 	bool _isSending;
-	std::deque<std::vector<BYTE>> _sendQueue;
+	std::deque<SendBuffer*> _sendQueue;
+	std::deque<std::vector<BYTE>> _sendQueue2;
 	std::vector<asio::const_buffer> _gatherBufs;
+
+	SendBufferPool _sendPool;
 };
 

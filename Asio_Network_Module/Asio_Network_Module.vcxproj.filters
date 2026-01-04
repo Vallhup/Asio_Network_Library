@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="ServerService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
@@ -23,12 +22,11 @@
     <ClCompile Include="IAcceptListener.cpp">
       <Filter>Accept</Filter>
     </ClCompile>
-    <ClCompile Include="Protocol.cpp">
-      <Filter>Protocol</Filter>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utillity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="ServerService.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -53,6 +51,9 @@
     <ClInclude Include="Protocol.h">
       <Filter>Protocol</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Utillity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Protocol">
@@ -66,6 +67,9 @@
     </Filter>
     <Filter Include="Service">
       <UniqueIdentifier>{914e82ab-c5af-47f8-95bb-cda36c54bbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utillity">
+      <UniqueIdentifier>{2814d1f8-928a-4c47-ac2e-e3b672e7839c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
