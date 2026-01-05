@@ -14,7 +14,7 @@ public:
 	virtual ~IPacketCodec() = default;
 
 	virtual bool Encode(uint16 type, const BYTE* payload, uint32 payloadSize,
-		std::vector<BYTE>& out) = 0;
+		SendBuffer& out) = 0;
 
 	virtual bool Decode(const BYTE* packet, uint32 packetSize,
 		PacketHeader& outHeader, const BYTE*& outPayload, uint32& outPayloadSize) = 0;

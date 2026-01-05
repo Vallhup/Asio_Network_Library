@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SendBuffer.h"
+
 class IConnectionListener;
 
 class Connection 
@@ -7,20 +9,6 @@ class Connection
 	static constexpr size_t MAX_BUFFERS{ 32 };
 	static constexpr size_t MAX_BYTES{ 64 * 1024 };
 	static constexpr uint32 DEFAULT_MAX_PACKET_SIZE{ 1024 * 1024 };
-
-	struct SendBuffer {
-		uint32 size;
-		BYTE data[DEFAULT_MAX_PACKET_SIZE];
-	};
-
-	class SendBufferPool {
-	public:
-		SendBuffer* Acquire();
-		void Release(SendBuffer* buf);
-
-	private:
-		std::vector<SendBuffer*> _free;
-	};
 
 public:
 	explicit Connection(tcp::socket s, IConnectionListener& listener

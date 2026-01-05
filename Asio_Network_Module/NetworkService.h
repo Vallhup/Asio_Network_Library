@@ -23,4 +23,3 @@ private:
 	std::vector<std::thread> _workers;
 	std::optional<asio::executor_work_guard<asio::io_context::executor_type>> _workGuard;
 };
-

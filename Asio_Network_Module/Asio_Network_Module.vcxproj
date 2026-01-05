@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Acceptor.h" />
+    <ClInclude Include="Asio_Network_Module.h" />
     <ClInclude Include="ClientService.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="IAcceptListener.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="NetworkService.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Protocol.h" />
+    <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="ServerService.h" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +180,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="ServerService.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

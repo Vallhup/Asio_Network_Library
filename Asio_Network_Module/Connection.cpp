@@ -46,8 +46,6 @@ void Connection::Send(std::span<const BYTE> data)
 	buffer->size = static_cast<uint32>(data.size());
 	memcpy(buffer->data, data.data(), buffer->size);
 
-	//std::vector<BYTE> buffer(data.begin(), data.begin() + data.size());
-
 	auto self = shared_from_this();
 	asio::dispatch(_strand,
 		[this, self, buf = std::move(buffer)]()
@@ -97,16 +95,6 @@ void Connection::DoSend()
 		++batchCount;
 	}
 
-	/*for (auto& data : _sendQueue2)
-	{
-		if (batchCount >= MAX_BUFFERS) break;
-		if (totalBytes + data.size() > MAX_BYTES) break;
-
-		_gatherBufs.emplace_back(asio::buffer(data.data(), data.size()));
-		totalBytes += data.size();
-		++batchCount;
-	}*/
-
 	auto self = shared_from_this();
 	asio::async_write(
 		_socket, _gatherBufs,
@@ -148,7 +136,6 @@ void Connection::OnSend(std::error_code ec, size_t batchCount)
 		SendBuffer* front = _sendQueue.front();
 		_sendQueue.pop_front();
 		_sendPool.Release(front);
-		//_sendQueue2.pop_front();
 	}
 		
 
@@ -213,24 +200,4 @@ void Connection::Close()
 			// Error Handling
 		}
 	}
-}
-
-/* --------------[ BufferPool ]--------------*/
-
-Connection::SendBuffer* Connection::SendBufferPool::Acquire()
-{
-	if (_free.empty())
-		return new SendBuffer;
-	
-	SendBuffer* buf = _free.back();
-	_free.pop_back();
-	return buf;
-}
-
-void Connection::SendBufferPool::Release(SendBuffer* buf)
-{
-	if (!buf) return;
-
-	buf->size = 0;
-	_free.push_back(buf);
 }

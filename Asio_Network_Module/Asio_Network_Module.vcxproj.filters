@@ -25,6 +25,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>Utillity</Filter>
     </ClCompile>
+    <ClCompile Include="SendBuffer.cpp">
+      <Filter>Utillity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServerService.h">
@@ -52,6 +55,12 @@
       <Filter>Protocol</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
+      <Filter>Utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="Asio_Network_Module.h">
+      <Filter>Utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBuffer.h">
       <Filter>Utillity</Filter>
     </ClInclude>
   </ItemGroup>
