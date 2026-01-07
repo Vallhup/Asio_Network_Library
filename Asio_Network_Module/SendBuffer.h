@@ -2,7 +2,9 @@
 
 struct SendBuffer {
 	uint32 size;
-	BYTE data[1024 * 1024];
+	BYTE data[1024];
+
+	SendBuffer* Clone() const;
 };
 
 class SendBufferPool {
