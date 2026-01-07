@@ -3,12 +3,13 @@
 
 SendBuffer* SendBufferPool::Acquire()
 {
-	if (_free.empty())
-		return new SendBuffer;
+	SendBuffer* buf;
+	if (_free.try_pop(buf))
+	{
+		return buf;
+	}
 
-	SendBuffer* buf = _free.back();
-	_free.pop_back();
-	return buf;
+	return new SendBuffer;
 }
 
 void SendBufferPool::Release(SendBuffer* buf)
@@ -16,7 +17,7 @@ void SendBufferPool::Release(SendBuffer* buf)
 	if (!buf) return;
 
 	buf->size = 0;
-	_free.push_back(buf);
+	_free.push(buf);
 }
 
 SendBuffer* SendBuffer::Clone() const

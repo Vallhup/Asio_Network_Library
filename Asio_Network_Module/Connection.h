@@ -49,7 +49,5 @@ private:
 	std::deque<SendBuffer*> _sendQueue;
 	std::deque<std::vector<BYTE>> _sendQueue2;
 	std::vector<asio::const_buffer> _gatherBufs;
-
-	SendBufferPool _sendPool;
 };
 

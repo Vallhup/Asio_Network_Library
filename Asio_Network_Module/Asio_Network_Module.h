@@ -7,6 +7,8 @@
 #include <deque>
 #include <span>
 
+#include <concurrent_queue.h>
+
 #include "types.h"
 
 #include "ServerService.h"

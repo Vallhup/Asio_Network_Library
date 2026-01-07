@@ -129,9 +129,9 @@ void Connection::OnSend(std::error_code ec, size_t batchCount)
 	{
 		SendBuffer* front = _sendQueue.front();
 		_sendQueue.pop_front();
-		_sendPool.Release(front);
+
+		SendBufferPool::Get().Release(front);
 	}
-		
 
 	if (!_sendQueue.empty())
 		DoSend();
