@@ -50,7 +50,10 @@ void Acceptor::DoAccept()
 					// Error Handling
 				}
 
-				_listener.OnAccept(std::move(socket));
+				else
+				{
+					_listener.OnAccept(std::move(socket));
+				}
 
 				if(_isRunning)
 					DoAccept();
