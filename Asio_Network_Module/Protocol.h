@@ -9,6 +9,8 @@ struct PacketHeader {
 
 #pragma pack(pop)
 
+struct SendBuffer;
+
 class IPacketCodec {
 public:
 	virtual ~IPacketCodec() = default;

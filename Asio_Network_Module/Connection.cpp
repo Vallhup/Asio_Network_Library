@@ -8,7 +8,7 @@
 Connection::Connection(tcp::socket s, IConnectionListener& listener
 	, uint32 maxPacketSize) : _socket(std::move(s)), _strand(_socket.get_executor()), 
 	_isClosed(false), _isSending(false), _listener(listener), 
-	_maxPacketSize(maxPacketSize)
+	_maxPacketSize(maxPacketSize), _id(std::numeric_limits<uint32>::max())
 {
 }
 
@@ -30,8 +30,6 @@ void Connection::Stop()
 	asio::dispatch(_strand,
 		[this, self]()
 		{
-			if (!_isClosed) return;
-
 			_listener.OnDisconnected(*this);
 			Close();
 		}
@@ -49,6 +47,25 @@ void Connection::Send(std::span<const BYTE> data)
 	auto self = shared_from_this();
 	asio::dispatch(_strand,
 		[this, self, buf = std::move(buffer)]()
+		{
+			if (_isClosed) return;
+
+			_sendQueue.push_back(std::move(buf));
+			if (!_isSending)
+			{
+				_isSending = true;
+				DoSend();
+			}
+		});
+}
+
+void Connection::Send(SendBuffer* data)
+{
+	if (data->size == 0) return;
+
+	auto self = shared_from_this();
+	asio::dispatch(_strand,
+		[this, self, buf = std::move(data)]()
 		{
 			if (_isClosed) return;
 
@@ -112,7 +129,7 @@ void Connection::OnRecv(std::error_code ec, size_t bytes)
 	if (_isClosed) return;
 	if (ec)
 	{
-		Close();
+		Stop();
 		return;
 	}
 
@@ -127,7 +144,7 @@ void Connection::OnSend(std::error_code ec, size_t batchCount)
 {
 	if (ec)
 	{
-		Close();
+		Stop();
 		return;
 	}
 
@@ -164,7 +181,7 @@ void Connection::ProcessPacket()
 		const uint32 packetSize = header.size;
 		if (packetSize < sizeof(PacketHeader) || packetSize > _maxPacketSize)
 		{
-			Close();
+			Stop();
 			return;
 		}
 
@@ -176,7 +193,7 @@ void Connection::ProcessPacket()
 		_recvAccum.erase(_recvAccum.begin(),
 			_recvAccum.begin() + packetSize);
 
-		_listener.OnPacketReceived(*this, packet);
+		_listener.OnPacketReceived(*this, header, packet.data());
 	}
 }
 

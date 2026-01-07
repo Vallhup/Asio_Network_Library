@@ -19,6 +19,10 @@ public:
 	void Stop();
 
 	void Send(std::span<const BYTE> data);
+	void Send(SendBuffer* data);
+
+	uint32 GetId() const { return _id; }
+	void SetId(uint32 id) { _id = id; }
 
 private:
 	void DoRecv();
@@ -29,6 +33,8 @@ private:
 
 	void ProcessPacket();
 	void Close();
+
+	uint32 _id;
 
 	bool _isClosed;
 	tcp::socket _socket;
