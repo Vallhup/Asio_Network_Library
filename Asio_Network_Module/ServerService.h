@@ -20,7 +20,8 @@ protected:
 	virtual void OnStart() override;
 	virtual void OnStop() override;
 
+	IConnectionListener& _connListener;
+
 private:
 	Acceptor _acceptor;
-	IConnectionListener& _connListener;
 };
