@@ -18,7 +18,6 @@ public:
 	void Start();
 	void Stop();
 
-	void Send(std::span<const BYTE> data);
 	void Send(SendBuffer* data);
 
 	uint32 GetId() const { return _id; }

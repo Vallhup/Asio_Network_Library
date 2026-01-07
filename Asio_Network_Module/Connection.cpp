@@ -36,29 +36,6 @@ void Connection::Stop()
 	);
 }
 
-void Connection::Send(std::span<const BYTE> data)
-{
-	if (data.size() == 0) return;
-
-	SendBuffer* buffer = _sendPool.Acquire();
-	buffer->size = static_cast<uint32>(data.size());
-	memcpy(buffer->data, data.data(), buffer->size);
-
-	auto self = shared_from_this();
-	asio::dispatch(_strand,
-		[this, self, buf = std::move(buffer)]()
-		{
-			if (_isClosed) return;
-
-			_sendQueue.push_back(std::move(buf));
-			if (!_isSending)
-			{
-				_isSending = true;
-				DoSend();
-			}
-		});
-}
-
 void Connection::Send(SendBuffer* data)
 {
 	if (data->size == 0) return;
