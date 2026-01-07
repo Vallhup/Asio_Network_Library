@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Library\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)Dependency\asio;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependency\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Library\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)Dependency\asio;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependency\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Library\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)Dependency\asio;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependency\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Library\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)Dependency\asio;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependency\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -166,6 +166,7 @@
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="ServerService.h" />
+    <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Acceptor.cpp" />

@@ -10,9 +10,6 @@
     <ClCompile Include="ClientService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="Connection.cpp">
-      <Filter>Connection</Filter>
-    </ClCompile>
     <ClCompile Include="IConnectionListener.cpp">
       <Filter>Connection</Filter>
     </ClCompile>
@@ -24,6 +21,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Utillity</Filter>
+    </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Connection</Filter>
     </ClCompile>
     <ClCompile Include="SendBuffer.cpp">
       <Filter>Utillity</Filter>
@@ -39,9 +39,6 @@
     <ClInclude Include="ClientService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Connection.h">
-      <Filter>Connection</Filter>
-    </ClInclude>
     <ClInclude Include="IConnectionListener.h">
       <Filter>Connection</Filter>
     </ClInclude>
@@ -51,16 +48,22 @@
     <ClInclude Include="IAcceptListener.h">
       <Filter>Accept</Filter>
     </ClInclude>
-    <ClInclude Include="Protocol.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Utillity</Filter>
     </ClInclude>
     <ClInclude Include="Asio_Network_Module.h">
       <Filter>Utillity</Filter>
     </ClInclude>
+    <ClInclude Include="Connection.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocol.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
     <ClInclude Include="SendBuffer.h">
+      <Filter>Utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
       <Filter>Utillity</Filter>
     </ClInclude>
   </ItemGroup>
