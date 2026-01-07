@@ -10,6 +10,8 @@ public:
 	explicit ClientService(uint16 threadCnt, std::string_view ip, uint16 port,
 		IConnectionListener& listener);
 	virtual ~ClientService() = default;
+	
+	void Send(SendBuffer* data);
 
 protected:
 	virtual void OnStart() override;

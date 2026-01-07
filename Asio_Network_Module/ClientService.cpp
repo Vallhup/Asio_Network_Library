@@ -8,25 +8,35 @@ ClientService::ClientService(uint16 threadCnt, std::string_view ip, uint16 port,
 {
 }
 
+void ClientService::Send(SendBuffer* data)
+{
+    _connection->Send(data);
+}
+
 void ClientService::OnStart()
 {
     auto socket = std::make_shared<tcp::socket>(_ioCtx);
     tcp::endpoint endpoint{ asio::ip::make_address(_ip.c_str()), _port };
 
-    asio::async_connect(
-        *socket, std::array<tcp::endpoint, 1>{ endpoint },
-        [this, socket](std::error_code ec, const tcp::endpoint&)
-        {
-            if (ec)
-            {
-                // Error Handling
-                return;
-            }
+    socket->connect(endpoint);
 
-            _connection = std::make_shared<Connection>(std::move(*socket), _listener);
-            _connection->Start();
-        }
-    );
+    _connection = std::make_shared<Connection>(std::move(*socket), _listener);
+    _connection->Start();
+
+    //asio::async_connect(
+    //    *socket, std::array<tcp::endpoint, 1>{ endpoint },
+    //    [this, socket](std::error_code ec, const tcp::endpoint&)
+    //    {
+    //        if (ec)
+    //        {
+    //            // Error Handling
+    //            return;
+    //        }
+
+    //        _connection = std::make_shared<Connection>(std::move(*socket), _listener);
+    //        _connection->Start();
+    //    }
+    //);
 }
 
 void ClientService::OnStop()
