@@ -24,6 +24,7 @@
     <ProjectGuid>{2254c3b6-f66b-4342-9d23-46cd7056cfb0}</ProjectGuid>
     <RootNamespace>AsioNetworkModule</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Asio_Network_Library</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
