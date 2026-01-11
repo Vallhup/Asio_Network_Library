@@ -51,6 +51,7 @@ All interactions across threads must be performed by posting tasks to the approp
 ### NetworkService
 
 **Role**
+
 NetworkService owns Asio io_context and manages the lifetime of all network-related components
 
 **Responsibilities**
@@ -67,6 +68,7 @@ NetworkService owns Asio io_context and manages the lifetime of all network-rela
 ### ClientService / ServerService
 
 **Role**
+
 ClientService and ServerService define TCP connection policies for outgoing and incoming connections respectively
 
 **Responsibilities**
@@ -81,6 +83,7 @@ ClientService and ServerService define TCP connection policies for outgoing and 
 ### Acceptor (Server only)
 
 **Role**
+
 Acceptor abstracts the asynchronous accept loop for server-side connections
 
 **Responsibilities**
@@ -100,6 +103,7 @@ The network library does not provide a session management facility
 The server application is responsible for implementing IAcceptListenerto process sockets accepted by the Acceptor and bind them to application-level Connection or session contexts
 
 **Role**
+
 Defines the server-side hook invoked when a new socket is accepted
 
 **Responsibilities**
@@ -115,6 +119,7 @@ Defines the server-side hook invoked when a new socket is accepted
 ### Connection
 
 **Role**
+
 Connection represents a single transport-level connection and abstracts all asynchronous network I/O behavior
 
 **Responsibilities**
@@ -134,6 +139,7 @@ Connection represents a single transport-level connection and abstracts all asyn
 All applications that create and own Connection instances must provide an implementation of the IConnectionListener interface
 
 **Role**
+
 Defines the callback interface between the network layer and the application layer
 
 **Responsibilities**
@@ -147,9 +153,20 @@ Defines the callback interface between the network layer and the application lay
  - Managing connection lifetime
  - Thread synchronization
 
-### RecvBuffer / SendBuffer
-RecvBuffer and SendBuffer are implementation-specific components.
-Their internal data structures may change for performance reasons without affecting the public behavior of Session.
+### SendBuffer
+
+SendBuffer is an object that encapsulates a contiguous memory region and its valid byte range for network transmission.
+
+In Boost.Asio-based asynchronous I/O, the caller must guarantee that the memory referenced by a send operation remains valid until the associated completion handler is invoked.
+For this reason, transmitting temporary stack buffers or short-lived packet objectes is unsafe.
+
+This library enforces all outgoing transmissions to be performed through SendBuffer.
+
+### SendBufferPool
+
+SendBufferPool is a pooling mechanism for reusing SendBuffer instances and their underlying byte buffers.
+
+Once an asynchronous send operation completes, the corresponding SendBuffer is automatically returned to the pool and reused for subsequent send requests.
 
 ## 7. Protocol Helper
 
@@ -170,18 +187,26 @@ Users do not need to construct PacketHeader instances directly.
 Decode does not take ownership of the packet buffer.
 The returned payload pointer references memory owned by the caller.
 
-## 8. Session LifeCycle
-
-
-
 ## 9. Error & Shutdown Policy
 
+At the current stage, the library does not provide a dedicated, user-configurable error handling or shutdown policy abstraction.
 
+Error handling and connection shutdown behavior are currently driven directly by Boost.Asio's asynchronous operation results.
+Network errors reported by Asio (e.g. connection reset, EOF, operation aborted) lead to immediate termination of the associated connection.
+
+A structured error callback or error handling interface is planned for future revisions of the library.
 
 ## 10. Build & Intergration
 
+This library requires:
+    - C++20 or later
+    - Boost.Asio (provided via the library's dependency configuration)
 
+The library is designed as a static/shared library.
 
-## 11. Testing Strategy
+Integration requirements:
+    - All I/O operations must be executed through the provided service interfaces.
+    - Users must not manually manage socket lifetime outside the Connection abstraction.
+    - Thread safety is guaranteed only within documented execution boundaries.
 
-
+Violating these assumptions may lead to undefined behavior.
