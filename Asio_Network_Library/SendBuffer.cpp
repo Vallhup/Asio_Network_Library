@@ -22,7 +22,7 @@ void SendBufferPool::Release(SendBuffer* buf)
 
 SendBuffer* SendBuffer::Clone() const
 {
-	SendBuffer* copy = new SendBuffer;
+	SendBuffer* copy = SendBufferPool::Get().Acquire();
 	copy->size = size;
 	
 	std::memcpy(copy->data, data, size);
