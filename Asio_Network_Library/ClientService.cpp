@@ -22,21 +22,6 @@ void ClientService::OnStart()
 
     _connection = std::make_shared<Connection>(std::move(*socket), _listener);
     _connection->Start();
-
-    //asio::async_connect(
-    //    *socket, std::array<tcp::endpoint, 1>{ endpoint },
-    //    [this, socket](std::error_code ec, const tcp::endpoint&)
-    //    {
-    //        if (ec)
-    //        {
-    //            // Error Handling
-    //            return;
-    //        }
-
-    //        _connection = std::make_shared<Connection>(std::move(*socket), _listener);
-    //        _connection->Start();
-    //    }
-    //);
 }
 
 void ClientService::OnStop()
