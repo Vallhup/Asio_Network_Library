@@ -157,9 +157,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Acceptor.h" />
-    <ClInclude Include="Asio_Network_Module.h" />
+    <ClInclude Include="Asio_Network_Library.h" />
     <ClInclude Include="ClientService.h" />
     <ClInclude Include="Connection.h" />
+    <ClInclude Include="ConnectionRegistry.h" />
     <ClInclude Include="IAcceptListener.h" />
     <ClInclude Include="IConnectionListener.h" />
     <ClInclude Include="NetworkService.h" />
@@ -167,12 +168,14 @@
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="ServerService.h" />
+    <ClInclude Include="StressTestClientService.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="ClientService.cpp" />
     <ClCompile Include="Connection.cpp" />
+    <ClCompile Include="ConnectionRegistry.cpp" />
     <ClCompile Include="IAcceptListener.cpp" />
     <ClCompile Include="IConnectionListener.cpp" />
     <ClCompile Include="NetworkService.cpp" />
@@ -184,6 +187,7 @@
     </ClCompile>
     <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="ServerService.cpp" />
+    <ClCompile Include="StressTestClientService.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

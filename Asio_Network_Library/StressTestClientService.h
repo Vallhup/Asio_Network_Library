@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NetworkService.h"
+#include "ConnectionRegistry.h"
 
 class StressTestClientService : public NetworkService {
 public:

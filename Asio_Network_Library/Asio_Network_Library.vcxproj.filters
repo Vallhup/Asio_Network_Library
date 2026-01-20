@@ -28,6 +28,12 @@
     <ClCompile Include="SendBuffer.cpp">
       <Filter>Utillity</Filter>
     </ClCompile>
+    <ClCompile Include="ConnectionRegistry.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="StressTestClientService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServerService.h">
@@ -51,9 +57,6 @@
     <ClInclude Include="pch.h">
       <Filter>Utillity</Filter>
     </ClInclude>
-    <ClInclude Include="Asio_Network_Module.h">
-      <Filter>Utillity</Filter>
-    </ClInclude>
     <ClInclude Include="Connection.h">
       <Filter>Connection</Filter>
     </ClInclude>
@@ -65,6 +68,15 @@
     </ClInclude>
     <ClInclude Include="types.h">
       <Filter>Utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="Asio_Network_Library.h">
+      <Filter>Utillity</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionRegistry.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="StressTestClientService.h">
+      <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
