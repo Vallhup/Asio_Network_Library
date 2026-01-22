@@ -16,7 +16,7 @@ class SendBufferPool {
 
 	static constexpr uint64 kCacheAlign{ 64 };
 	static constexpr uint32 kInvalidLevel
-	{ std::numeric_limits<uint32>::max() };
+	{ (std::numeric_limits<uint32>::max)() };
 
 public:
 	static SendBufferPool& Get()
